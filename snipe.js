@@ -2,6 +2,7 @@
 // はい。これは国語で使えません。
 // はい。これは自動的に進めません。
 // はい。これは自動入力ができません。
+// getCurrentQuestion() 関数の定義
 function getCurrentQuestion() {
   var current = $('.question-container.current');
   var currentId = current.attr('id').split('-');
@@ -17,10 +18,11 @@ function getCurrentQuestion() {
   }).trigger("click");
 
   $('.choice-enter-button').trigger("click")
-  setTimeout(function(){}, Math.random()*1200)
-  $('.description-pane-next-icon next').trigger("click")
+  setTimeout(function(){}, Math.random()*5000)
+  $('.description-pane-next-icon').trigger("click")
 
       
   return answer_text;
 }
+
 getCurrentQuestion();
