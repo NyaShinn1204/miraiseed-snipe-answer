@@ -75,6 +75,11 @@
             console.log(answer_text)
             
             if (current.find('input.answer-input-text.inputtext').is(':visible')) {
+
+              if (answer_text.includes($('.right.answer_panel span.input_txt01').text())) {
+                answer_text = answer_text.replace($('.right.answer_panel span.input_txt01').text(), "")
+              }
+
               $('.right.answer_panel div.inputtext_dummy').text(answer_text);
           
               $('.devicekeyboard-enter-button').trigger("click");
@@ -142,7 +147,3 @@
   console.log('To start the interval, type: startInterval()');
   console.log('To stop the interval, type: stopInterval()');
 })();
-
-
-// 正しい答えをクリックまたは入力する
-getCurrentQuestion();
