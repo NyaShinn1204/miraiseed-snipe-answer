@@ -24,9 +24,7 @@
       tempDiv.innerHTML = html.replace(/【(?:答え|解答)】/, '').trim();
       return $(tempDiv).text().trim();
     });
-  
-    //answer_texts_dev_01 = answer_texts.forEach(function(){})
-    //console.log(answer_texts_dev_01)
+
   
     console.log(answer_html)
   
@@ -72,31 +70,21 @@
           });
           if (bTagCount == 1) {
             console.log(answer_text)
+            $('.answer-input-choices-container dd').filter(function() {
+              return $(this).find('span').text().trim() === answer_text[0];
+            }).trigger("click");
+
+            $('.choice-enter-button').trigger("click");
+            setTimeout(1*5000)
           } else {
+            console.log("btag_count = 1++")
             // bタグの中身を正規表現で抽出
             let matches = answer_html[0].match(/<b>(.*?)<\/b>/g).map(function(tag) {
               return tag.replace(/<\/?b>/g, ''); // <b> と </b> を削除
             });
-            //console.log(matches); // 結果をコンソールに表示
-            // 分割された文字列をループで処理する
-            //for (let i = 0; i < matches.length; i++) {
-            //  console.log(matches[i]);
-            //  $('.answer-input-choices-container dd').filter(function() {
-            //    return $(this).find('span').text().trim() === matches[0];
-            //  }).trigger("click");
-            //}
-            // answer-input-itemクラスを持つdiv要素をすべて取得
             let answerItems = $('.question-container.current .answer-input-item');
             // 選択肢回答欄からdata-group-idとdata-item-idを取得
             let choiceItems = $('.choice-items-container dl div');
-                        // answer-input-itemクラスを持つdiv要素をすべて取得
-
-            // 要素をID順にソート
-            //answerItems.sort(function(a, b) {
-            //    let idA = $(a).attr('id').split('-').map(Number);
-            //    let idB = $(b).attr('id').split('-').map(Number);
-            //    return idA[1] - idB[1] || idA[2] - idB[2];
-            //});
 
             // matchesの内容をidの若い順に<p class="answer-input-text"></p>に挿入
             for (let i = 0; i < matches.length; i++) {
@@ -117,47 +105,12 @@
                     function getDataByItemId(groupid) {
                       return $(".choice-items-container div[data-group-id='" + groupid + "']").data('itemId');
                     }
-                    //tmp_itemId = getDataByGroupId($(answerItems[i]).data('group-id'));
-                    //console.log(tmp_itemId)
-                    //$(answerItems[i]).find('.answer-input-text').text(matches[i]);
-                    ////console.log($(answerItems[i]).data('group-id'));
-                    //$(answerItems[i]).find('.answer-input-text').after('<div name="selectedChoice" data-group-id="' + $(answerItems[i]).data('group-id') + '" data-item-id="' + tmp_itemId + '"></div>');
                 }
             }
-         
-            //// data-group-idとdata-item-idを含む要素をフィルタリング
-            //let filteredChoiceItems = choiceItems.filter(function() {
-            //    return $(this).data('group-id') !== "" && $(this).data('item-id') !== "";
-            //});
-         //
-            //// データを格納するオブジェクトの作成
-            //let dataMap = {};
-            //filteredChoiceItems.each(function() {
-            //    let groupId = $(this).data('group-id');
-            //    let itemId = $(this).data('item-id');
-            //    let text = $(this).find('dt').text(); // もし必要なら選択肢のテキストを取得できます
-            //    if (!dataMap[groupId]) {
-            //        dataMap[groupId] = [];
-            //    }
-            //    dataMap[groupId].push(itemId);
-            //});
-           //
-            //for (let i = 0; i < matches.length; i++) {
-            //  console.log(matches[i]);
-            //  //$('.answer-input-choices-container dd').filter(function() {
-            //  //  return $(this).find('span').text().trim() === matches[0];
-            //  //}).trigger("click");
-            //}
-         
-            // データを使ってmatchesの内容を適切な<p class="answer-input-text"></p>に挿入
-            //let answerItems = $('.answer-input-item.medium');
-            //answerItems.each(function(index) {
-            //    let groupId = $(this).data('group-id');
-            //    let itemId = dataMap[groupId][index];
-            //    $(this).find('.answer-input-text').text(matches[index]);
-            //    $(this).find('.answer-input-text').after('<div name="selectedChoice" data-group-id="' + groupId + '" data-item-id="' + itemId + '"></div>');
-            //});
+            $('.choice-enter-button').trigger("click");
+            setTimeout(1*5000)
           }
+       
         } else {
           console.log("b")
           answer_texts.forEach(function(answer_text) {
@@ -183,22 +136,29 @@
               $('.devicekeyboard-enter-button').trigger("click");
               setTimeout(1*5000)
             } else {
+              console.log("else -parts-02")
 
-  
-              // 文字列を個々の文字に分割する
-              var characters = answer_text.split("，");
-              
-              // 分割された文字列をループで処理する
-              for (let i = 0; i < characters.length; i++) {
-                console.log(characters[i]);
-  //             }
-  //             for (let i = 1; i < answer_text.length; i++) {
-  //               //console.log(`iの値は ${i}`);
-  //               console.log(answer_text[i])
+
+
+              if (answer_html[0].includes("</b>，<b>")) {
+                console.log("adwasddd--01")
+                // 文字列を個々の文字に分割する
+                var characters = answer_text.split("，");
+                
+                // 分割された文字列をループで処理する
+                for (let i = 0; i < characters.length; i++) {
+                  console.log(characters[i]);
+                  $('.answer-input-choices-container dd').filter(function() {
+                    return $(this).find('span').text().trim() === characters[i];
+                  }).trigger("click");
+                }
+              } else {
+                console.log("adwasddd--02")
                 $('.answer-input-choices-container dd').filter(function() {
-                  return $(this).find('span').text().trim() === characters[i];
+                  return $(this).find('span').text().trim() === answer_text;
                 }).trigger("click");
               }
+              
               //$('.answer-input-choices-container dd').filter(function() {
               //  return $(this).find('span').text().trim() === answer_text[0];
               //}).trigger("click");
@@ -211,12 +171,12 @@
         }
       }
   
-      $('.answer-input-choices-container dd').filter(function() {
-        return $(this).find('span').text().trim() === answer_text[0];
-      }).trigger("click");
+      //$('.answer-input-choices-container dd').filter(function() {
+      //  return $(this).find('span').text().trim() === answer_text[0];
+      //}).trigger("click");
     
-      $('.choice-enter-button').trigger("click")
-      setTimeout(1*5000)
+      //$('.choice-enter-button').trigger("click")
+      //setTimeout(1*5000)
     }
   
     setTimeout(function() {
@@ -226,6 +186,10 @@
     if ($('.dialogclose').is(':visible')) {
       $('.dialogclose').trigger("click");
     }
+  }
+
+  function dev_start() {
+    getCurrentQuestion()
   }
 
   // スクリプトの実行を開始する関数
@@ -241,6 +205,7 @@
   // コンソールに開始と停止のための関数を提供
   window.startInterval = startInterval;
   window.stopInterval = stopInterval;
+  window.devstart = dev_start;
 
   // 開始と停止のためのメッセージを表示
   console.log('To start the interval, type: startInterval()');
