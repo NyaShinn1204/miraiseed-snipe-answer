@@ -75,9 +75,17 @@
             console.log(answer_text)
             
             if (current.find('input.answer-input-text.inputtext').is(':visible')) {
-
               if (answer_text.includes($('.right.answer_panel span.input_txt01').text())) {
                 answer_text = answer_text.replace($('.right.answer_panel span.input_txt01').text(), "")
+              }
+
+
+              if (answer_text.includes("（") || answer_text.includes("(")) {
+                console.log("pattern 02x");
+                answer_text = answer_text
+                  .replace(/（[^））]*）/g, "")
+                  .replace(/\([^()]*\)/g, "")
+                  .replace(/（[^)]*\)/g, "");
               }
 
               $('.right.answer_panel div.inputtext_dummy').text(answer_text);
@@ -85,6 +93,7 @@
               $('.devicekeyboard-enter-button').trigger("click");
               setTimeout(1*5000)
             } else {
+
   
               // 文字列を個々の文字に分割する
               var characters = answer_text.split("，");
@@ -147,3 +156,4 @@
   console.log('To start the interval, type: startInterval()');
   console.log('To stop the interval, type: stopInterval()');
 })();
+
