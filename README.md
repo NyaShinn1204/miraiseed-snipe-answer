@@ -1,3 +1,5 @@
+## はいこれは一部の問題で動きません
+
 # Miraiseed Answer Sniper
 
 はい。これは答えを略奪します
